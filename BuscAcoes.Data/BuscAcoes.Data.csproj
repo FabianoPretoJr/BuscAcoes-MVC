@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20210517142615_AdicionandoAtivoEmSetor.cs" />
+    <Compile Remove="Migrations\20210517142615_AdicionandoAtivoEmSetor.Designer.cs" />
+    <Compile Remove="Migrations\20210517145046_AdicionandoAtivoEmSetor.cs" />
+    <Compile Remove="Migrations\20210517145046_AdicionandoAtivoEmSetor.Designer.cs" />
+    <Compile Remove="Migrations\20210517145602_AdicionandoAtivoEmSetor.cs" />
+    <Compile Remove="Migrations\20210517145602_AdicionandoAtivoEmSetor.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.14">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.14">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BuscAcoes.Dominio\BuscAcoes.Dominio.csproj" />
+  </ItemGroup>
+
+</Project>

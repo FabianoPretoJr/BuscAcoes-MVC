@@ -1,0 +1,37 @@
+﻿@model BuscAcoes.Dominio.DTOs.DiasIndisponiveis.DiasIndisponiveisInputDTO
+
+@{
+    var editar = Model.ParaEdicao;
+    var titulo = (Model.ParaEdicao ? "Edição" : "Cadastro") + " de dia indisponível";
+    ViewData["Title"] = titulo;
+    ViewData["PaginaAtiva"] = "calendario";
+}
+
+<div class="container-fluid p-0">
+    <form id="formDia" asp-action="SalvarDia" asp-controller="Calendario" method="POST">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if (Model.ParaEdicao)
+        {
+            <input asp-for="Id" class="form-control" type="hidden" />
+        }
+        <input asp-for="Data" type="hidden" class="form-control" />
+
+        <div class="row align-items-center">
+            <p class="text-center"><i class="far fa-calendar me-1"></i>Data: <b class="ms-1">@Model.Data.ToShortDateString()</b></p>
+        </div>
+        <div class="row align-items-center">
+            <div class="form-group">
+                <label asp-for="Descricao" class="control-label">@Html.DisplayNameFor(model => model.Descricao)</label>
+                <input asp-for="Descricao" class="form-control" />
+                <label id="Descricao-error" class="error text-danger" for="Descricao" style="display:none"></label>
+            </div>
+        </div>
+
+    </form>
+
+    @if (Model.ParaEdicao)
+    {
+        <form id="formDeletarDia" asp-action="Deletar" asp-controller="Calendario" asp-route-id="@Model.Id" method="post">
+        </form>
+    }
+</div>

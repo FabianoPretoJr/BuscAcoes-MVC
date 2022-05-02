@@ -1,0 +1,71 @@
+﻿@model BuscAcoes.Dominio.DTOs.Empresa.EmpresaInputDTO
+
+@{
+    var titulo = (Model.ParaEdicao ? "Edição" : "Cadastro") + " de Empresa";
+    var editavel = Model.ParaEdicao;
+    ViewData["Title"] = titulo;
+    ViewData["PaginaAtiva"] = "empresa";
+}
+
+
+<div class="container-fluid p-0">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center flex-row">
+                        <h3 class="text-start">
+                            <a class="text-dark" asp-controller="Empresa" asp-action="Index"><i class="fas fa-chevron-left"></i></a>
+                        </h3>
+                        <h3 class="m-auto">@titulo</h3>
+                    </div>
+                    <h5 class="mt-1 text-center text-muted">
+                        Os campos com <b class="text-danger">*</b> são obrigatórios.
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <form asp-action="Salvar" asp-controller="Empresa" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            @if (Model.ParaEdicao)
+                            {
+                                <input asp-for="Id" class="form-control" type="hidden" />
+                            }
+                            <div class="row">
+                                <div class="form-group">
+                                    <label asp-for="Nome" class="control-label"><b class="text-danger">*</b>Nome</label>
+                                    <input asp-for="Nome" class="form-control" />
+                                    <span asp-validation-for="Nome" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Cnpj" class="control-label"><b class="text-danger">*</b>CNPJ</label>
+                                    <input asp-for="Cnpj" class="form-control" mask="cnpj" readonly="@Model.ParaEdicao" />
+                                    <span asp-validation-for="Cnpj" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="SetorId" class="control-label"><b class="text-danger">*</b>Setor</label>
+                                    <select class="form-select" asp-for="SetorId" asp-items='@(new SelectList(@ViewBag.setor, "Id", "Nome"))'>
+                                        <option disabled selected>- Selecione o Setor -</option>
+                                    </select>
+                                    <span asp-validation-for="SetorId" class="text-danger"></span><br />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group d-flex justify-content-center">
+                                    <input type="submit" value="Salvar" class="btn btn-lg btn-primary" />
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/masks.js"></script>
+    <script src="~/js/cnpj-custom-validation.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,71 @@
+﻿@model BuscAcoes.Dominio.DTOs.Acao.AcaoInputDTO
+
+@{
+    ViewData["Title"] = "Edição de Ação";
+    ViewData["PaginaAtiva"] = "acoes";
+}
+
+<div class="container-fluid p-0">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Salvar" asp-controller="Acao">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center flex-row">
+                            <h3 class="text-start">
+                                <a class="text-dark" asp-controller="Acao" asp-action="Index"><i class="fas fa-chevron-left"></i></a>
+                            </h3>
+                            <h3 class="m-auto">Selecione a empresa da ação</h3>
+                        </div>
+                        <h5 class="mt-1 text-center text-muted">
+                            Os campos com <b class="text-danger">*</b> são obrigatórios.
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <input asp-for="Id" class="form-control" type="hidden" />
+                            <input asp-for="EmpresaId" class="form-control" type="hidden" />
+                            <div class="form-group">
+                                <label asp-for="EmpresaId" class="control-label"><b class="text-danger">*</b> Empresa</label>
+                                <select asp-for="EmpresaId" disabled class="form-select" asp-items="@ViewBag.Empresas">
+                                    <option disabled selected>- Selecione a Empresa -</option>
+                                </select>
+                                <span asp-validation-for="EmpresaId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">CNPJ</label>
+                                <input asp-for="CnpjEmpresa" class="form-control" id="cnpj" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Setor</label>
+                                <input asp-for="SetorEmpresa" class="form-control" id="setor" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="d-flex card-header justify-content-center">
+                        <h3 class="text-center flex-fill">Ações</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="CodigoNegociacao" class="control-label"><b class="text-danger">*</b> Código negociação</label>
+                                <input asp-for="CodigoNegociacao" class="form-control" required />
+                                <span asp-validation-for="CodigoNegociacao" class="text-danger"></span><br />
+                            </div>
+                            <div class="form-group d-flex justify-content-center">
+                                <input type="submit" value="Salvar" class="btn btn-lg btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

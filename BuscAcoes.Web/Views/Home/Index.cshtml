@@ -1,0 +1,77 @@
+﻿@model BuscAcoes.Dominio.DTOs.HomeDTO
+
+@{
+    ViewData["Title"] = "DashBoard";
+    ViewData["PaginaAtiva"] = "home";
+}
+
+<div class="container-fluid p-0">
+    <h1 class="h1 mb-3 text-center">Dashboard</h1>
+
+    <div class="row justify-content-md-center">
+        <div class="col-md-8">
+            <div class="card">
+
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingTwo">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="true" aria-controls="flush-collapseTwo">
+                                <i class="fas fa-money-bill-wave me-2 text-success"></i> Valor das suas ações
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <canvas class="floating-bars"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    @if (Model.ExibeCalendario)
+                    {
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    <i class="far fa-calendar-times me-2 text-danger"></i> Dias Indisponíveis
+                                </button>
+                            </h2>
+                            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <partial name="~/Views/Calendario/_Calendario.cshtml" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@if (Model.ExibeCalendario)
+{
+    @section Modals{
+        <partial name="~/Views/Calendario/_CalendarioModal.cshtml" />
+    }
+
+    @section Styles {
+        <link rel="stylesheet" href="~/css/calendar.css" />
+    }
+}
+
+@section Scripts {
+    @if (Model.ExibeCalendario)
+    {
+        <partial name="~/Views/Calendario/_CalendarioScripts.cshtml" for="PartialCalendarioDTO" />
+    }
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js"></script>
+
+    <!-- Variaveis que necessitam do C# -->
+    <script type="text/javascript">
+        const endereco = '@(Url.Action("Grafico", "Home"))';
+    </script>
+
+    <script type="text/javascript" src="~/js/grafico.js"></script>
+}

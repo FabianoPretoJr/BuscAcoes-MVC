@@ -1,0 +1,118 @@
+﻿@model BuscAcoes.Dominio.DTOs.ClienteAcao.ClienteAcaoInputDTO
+
+@{
+    var titulo = (Model.ParaEdicao ? "Edição" : "Cadastro") + " de Alerta";
+    ViewData["Title"] = titulo;
+    ViewData["PaginaAtiva"] = "minhasAcoes";
+}
+
+<div class="container-fluid p-0">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center flex-row">
+                        <h3 class="text-start">
+                            @if (Model.ParaEdicao)
+                            {
+                                <a class="text-dark" asp-controller="ClienteAcao" asp-action="Acoes"><i class="fas fa-chevron-left"></i></a>
+                            }
+                            else
+                            {
+                                <a class="text-dark" asp-controller="Acao" asp-action="Index"><i class="fas fa-chevron-left"></i></a>
+                            }
+                        </h3>
+                        <h3 class="m-auto">Detalhes da Ação</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="control-label">Código negociação</label>
+                            <input value="@Model.CodigoNegociacao" class="form-control" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Empresa</label>
+                            <input value="@Model.NomeEmpresa" class="form-control" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">CNPJ</label>
+                            <input value="@Model.CnpjEmpresa" class="form-control" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Setor</label>
+                            <input value="@Model.Setorempresa" class="form-control" readonly />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center flex-row">
+                        <h3 class="m-auto">@titulo</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <form asp-action="Salvar" asp-controller="ClienteAcao">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            @if (Model.ParaEdicao)
+                            {
+                                <input asp-for="Id" class="form-control" type="hidden" />
+                            }
+                            <input asp-for="IdAcao" class="form-control" type="hidden" />
+                            <input asp-for="IdCliente" class="form-control" type="hidden" />
+                            <input asp-for="IdUsuario" class="form-control" type="hidden" />
+                            <input asp-for="CodigoNegociacao" class="form-control" type="hidden" />
+                            <input asp-for="NomeEmpresa" class="form-control" type="hidden" />
+                            <input asp-for="CnpjEmpresa" class="form-control" type="hidden" />
+                            <input asp-for="Setorempresa" class="form-control" type="hidden" />
+                            <div class="form-group mb-3">
+                                <label asp-for="Tolerancia" class="control-label">Tolerância</label>
+                                <input asp-for="Tolerancia" type="text" class="form-control" />
+                                <span asp-validation-for="Tolerancia" class="text-danger"></span>
+                            </div>
+                            <div class="form-check d-flex mb-3 justify-content-center align-items-center">
+                                <input asp-for="ReceberEmail" type="checkbox" class="form-check-input me-1" />
+                                <label class="form-check-label" for="ReceberEmail">
+                                    Deseja receber notificação pelo E-mail ?
+                                </label>
+                                <span asp-validation-for="ReceberEmail" class="text-danger"></span>
+                            </div>
+                            <div class="form-group d-flex justify-content-center">
+                                <input type="submit" value="Salvar" class="btn btn-lg btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        document.getElementById("Tolerancia").addEventListener('keydown', function (event) {
+
+            const key = event.keyCode || 0;
+
+            if (key == 8 ||
+                key == 9 ||
+                key == 13 ||
+                key == 46 ||
+                key == 110 ||
+                key == 188 ||
+                (key >= 35 && key <= 40) ||
+                (key >= 48 && key <= 57) ||
+                (key >= 96 && key <= 105)) {  //Somente numéricos, sem ponto e com virgula
+                return true;
+            }
+
+            event.preventDefault();
+            return false;
+
+        });
+    </script>
+}

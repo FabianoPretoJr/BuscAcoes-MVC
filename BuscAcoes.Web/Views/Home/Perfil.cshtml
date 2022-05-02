@@ -1,0 +1,87 @@
+﻿@model BuscAcoes.Dominio.DTOs.Cliente.ClientePerfilInputDTO
+
+@{
+    ViewData["Title"] = "Meu Perfil";
+
+    var activeLogin = (bool)TempData["geralAtivado"] ? "" : "active";
+    var activeGeral = (bool)TempData["geralAtivado"] ? "active" : "";
+    var showActiceLogin = (bool)TempData["geralAtivado"] ? "" : "show active";
+    var showActiveGeral = (bool)TempData["geralAtivado"] ? "show active" : "";
+}
+
+<div class="row">
+    <div class="col-md-3 col-xl-2">
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="text-center"><i class="fas fa-user-circle me-1"></i> Perfil</h5>
+            </div>
+
+            <div class="list-group list-group-flush" role="tablist">
+                <a class="list-group-item list-group-item-action @activeLogin" data-bs-toggle="list" href="#login" role="tab">
+                    Login
+                </a>
+                <a class="list-group-item list-group-item-action @activeGeral" data-bs-toggle="list" href="#geral" role="tab">
+                    Geral
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9 col-xl-10">
+        <div class="tab-content">
+            <div class="tab-pane fade @showActiveGeral" id="geral" role="tabpanel">
+                <div class="card">
+                    <div class="d-flex flex-row card-header justify-content-center">
+                        <h1 class="text-center">Informações Gerais</h1>
+                    </div>
+                    <div class="card-body">
+                        <form asp-controller="Home" asp-action="SalvarPerfil" method="post">
+                            <input asp-for="IdCliente" class="form-control" type="hidden" />
+                            <input asp-for="IdUsuario" class="form-control" type="hidden" />
+                            <div class="row">
+                                <div class="col-auto mb-3 m-auto">
+                                    <label class="form-label">CPF</label>
+                                    <input mask="cpf" readonly asp-for="Documento" class="form-control form-control-lg" placeholder="Digite seu CPF" />
+                                    <span asp-validation-for="Documento" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Email</label>
+                                    <input asp-for="Email" class="form-control form-control-lg" placeholder="Digite seu Email" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Data de Nascimento</label>
+                                    <input type="date" asp-for="DataNasc" class="form-control form-control-lg" />
+                                    <span asp-validation-for="DataNasc" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group d-flex justify-content-center">
+                                <button type="submit" class="btn btn-lg btn-primary">Salvar</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade @showActiceLogin" id="login" role="tabpanel">
+                <div class="card">
+                    <div class="d-flex flex-row card-header justify-content-center">
+                        <h1 class="text-center">Informações de Login</h1>
+                    </div>
+                    <div class="card-body">
+                        <partial name="~/Views/Usuario/_EditarUsuario.cshtml" model="Model.Usuario" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/cfp-custom-validation.js" asp-append-version="true"></script>
+    <script src="~/js/masks.js"></script>
+}

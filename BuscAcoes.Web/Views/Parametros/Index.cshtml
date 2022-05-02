@@ -1,0 +1,65 @@
+﻿@model BuscAcoes.Dominio.DTOs.Parametro.ParametroInputDTO
+
+@{
+    ViewData["Title"] = "Configurações";
+    ViewData["PaginaAtiva"] = "configuracoes";
+}
+
+<div class="container-fluid p-0">
+    <h1 class="mb-3 text-center">Configurações</h1>
+    <div class="row justify-content-md-center">
+        @if (@TempData["Erro"] != null)
+        {
+            <div class="col-xl-6 col-md-10 alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="alert-message d-flex">
+                    <strong class="me-3"><i class="fas fa-exclamation-circle"></i> Erro</strong>
+                    <span class="m-auto">@TempData["Erro"]</span>
+                </div>
+            </div>
+        }
+        else if (@TempData["Sucesso"] != null)
+        {
+            <div class="col-xl-6 col-md-10 alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <div class="alert-message d-flex">
+                    <strong class="me-3"><i class="fas fa-check-circle"></i> Sucesso</strong>
+                    <span class="m-auto">@TempData["Sucesso"]</span>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-xl-6 col-md-10">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="Salvar" asp-controller="Parametros">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group mb-3">
+                            <label asp-for="ChaveApi" class="control-label"><b class="text-danger">*</b> Chave API</label>
+                            <input asp-for="ChaveApi" class="form-control" />
+                            <span asp-validation-for="ChaveApi" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="LinkApi" class="control-label"><b class="text-danger">*</b> Link API</label>
+                            <input asp-for="LinkApi" class="form-control" />
+                            <span asp-validation-for="LinkApi" class="text-danger"></span>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label asp-for="MonitoramentoMinutos" class="control-label"><b class="text-danger">*</b> Intervalo monitoramento em minutos</label>
+                            <input asp-for="MonitoramentoMinutos" type="number" class="form-control" />
+                            <span asp-validation-for="MonitoramentoMinutos" class="text-danger"></span>
+                        </div>
+                        <div class="form-group d-flex justify-content-center">
+                            <input type="submit" value="Salvar" class="btn btn-lg btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

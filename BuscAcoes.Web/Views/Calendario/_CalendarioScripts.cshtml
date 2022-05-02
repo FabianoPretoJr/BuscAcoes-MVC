@@ -1,0 +1,16 @@
+﻿@model BuscAcoes.Dominio.DTOs.Calendario.PartialCalendarioDTO
+
+@using BuscAcoes.Dominio.Enum;
+
+<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
+
+<!-- Variaveis que necessitam do C# -->
+<script type="text/javascript">
+        const datasJson = JSON.parse('@Html.Raw(Model.DiasIndisponiveisJson)');
+        const cadastrarDiaUrl = '@(Url.Action("Cadastrar", "Calendario"))';
+        const editarDiaUrl = '@(Url.Action("Editar", "Calendario"))';
+        const podeEditar = @(Model.Perfil == EPerfil.Cliente? 0 : 1);
+</script>
+
+<script type="text/javascript" src="~/js/calendar.js"></script>

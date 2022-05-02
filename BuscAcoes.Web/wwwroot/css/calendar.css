@@ -1,0 +1,24 @@
+﻿.event {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 150px;
+    bottom: 3px;
+    left: calc(50% - 1.5px);
+    content: " ";
+    display: block;
+    background: #f64747;
+}
+
+.flatpickr-innerContainer {
+    justify-content: center;
+}
+
+
+.update-day{
+    display: flex;
+}
+
+.update-day:first-child{
+    justify-self: center;
+}

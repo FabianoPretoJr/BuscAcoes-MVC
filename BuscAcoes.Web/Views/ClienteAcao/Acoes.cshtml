@@ -1,0 +1,89 @@
+﻿@model IEnumerable<BuscAcoes.Dominio.DTOs.ClienteAcao.ClienteAcaoOutputDTO>
+
+@{
+    ViewData["Title"] = "Minhas ações";
+    ViewData["PaginaAtiva"] = "minhasAcoes";
+
+    var returnUrl = Url.Action(action: "Acoes", controller: "ClienteAcao");
+    var view = "minhasAcoes";
+}
+
+<div class="container-fluid p-0">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex flex-row justify-content-center align-items-center">
+                <h1 class="mb-3 text-center flex-fill">Minhas ações</h1>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <table class="table data-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CodigoNegociacao)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UltimoPreco)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.UltimaVariacao)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Tolerancia)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (@item.AcaoAtiva == false)
+                                        {
+                                            <span class="text-danger me-2"><i class="fas fa-exclamation-triangle"></i> Descontinuada</span>
+                                        }
+                                        @Html.DisplayFor(modelItem => item.CodigoNegociacao)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UltimoPreco)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UltimaVariacao)%
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Tolerancia)%
+                                    </td>
+                                    <td class="actions">
+                                        @if (@item.AcaoAtiva)
+                                        {
+                                            <form asp-action="Editar" asp-controller="ClienteAcao" asp-route-id="@item.Id" method="post">
+                                                <button type="submit" class="btn btn-light-outline text-warning" title="Editar">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </form>
+                                        }
+                                        <form asp-action="Deletar" asp-controller="ClienteAcao" asp-route-id="@item.Id" method="post">
+                                            <button type="submit" class="btn btn-light-outline text-danger" title="Desmonitorar">
+                                                <i class="far fa-bell-slash"></i>
+                                            </button>
+                                        </form>
+                                        <form asp-action="Historico" asp-route-view="@view" asp-route-returnUrl="@returnUrl" asp-controller="ClienteAcao" asp-route-id="@item.CodigoNegociacao" method="post">
+                                            <button type="submit" class="btn btn-light-outline text-primary" title="Histórico">
+                                                <i class="fas fa-info"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/data-table.js" type="text/javascript"></script>
+}
